@@ -3,7 +3,7 @@
 (require memo)
 
 (define (floatFuncLev x S1 S2)
-    (exact->inexact (/ x (max (string-length S1) (string-length S2)))))
+    (exact->inexact (- 1 (/ x (max (string-length S1) (string-length S2))))))
 
 (define/memoize (ld S1 S2 i j)
     (cond
@@ -21,7 +21,6 @@
                 (+ 1 (ld S1 S2 (- i 1) (- j 1))))]))
 
 (define (levenshtein S1 S2)
-    (floatFuncLev (- (max (string-length S1) (string-length S2))
-    (ld S1 S2 (string-length S1) (string-length S2))) S1 S2))
+    (floatFuncLev (ld S1 S2 (string-length S1) (string-length S2)) S1 S2))
 
 (provide ld levenshtein)
